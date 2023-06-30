@@ -1,0 +1,7 @@
+1. Click LOGIN button
+2. Redirect to spotify login page
+3. Redirect to home page once logged inn
+4. Data layer 1:31:00 (React context API the solution to prop drilling)
+5. Pull data from spotify to show playlist
+6. work on spotify playbar (footer)
+5. work on header and song selection in body
