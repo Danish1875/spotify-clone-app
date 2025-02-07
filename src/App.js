@@ -60,6 +60,13 @@ function App() {
       });
 
       spotify.getUserPlaylists().then((playlists) => {
+        dispatch({
+          type: "SET_PLAYLISTS",
+          playlists: playlists,
+        });
+      });
+
+      spotify.getUserPlaylists().then((playlists) => {
         if (playlists.items.length > 0) {
           spotify.getPlaylist(playlists.items[0].id).then(response => {
             console.log("Fetched playlist:", response);
