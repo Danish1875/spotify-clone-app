@@ -12,17 +12,17 @@ const spotify = new SpotifyWebApi();    //allows to interact back n forth with s
 
 
 function App() {
-  const [{user, token}, dispatch] = useDataLayerValue();   //datalayer syntax to retrieve items from the datalayer list  // {user} - same as datalayer.user
+  const [{ user, token }, dispatch] = useDataLayerValue();   //datalayer syntax to retrieve items from the datalayer list  // {user} - same as datalayer.user
 
 
   //runs code based on a given condition
   useEffect(() => {
-    const hash  = getTokenFromUrl();   //after clicking agree spotify handles authentication
+    const hash = getTokenFromUrl();   //after clicking agree spotify handles authentication
     window.location.hash = "";          //strips it and makes a clean url
     const _token = hash.access_token;
 
     if (_token) {
-      
+
       spotify.setAccessToken(_token);    //magic key to interact with spotify and react
 
       dispatch({
@@ -30,12 +30,12 @@ function App() {
         token: _token,
       });
 
-      spotify.getPlaylist('37i9dQZEVXcJSB0z6KuUxL').then(response => 
-        dispatch({
-          type: "SET_DISCOVER_WEEKLY",
-          discover_weekly: response,
-        })
-      );
+      // spotify.getPlaylist('3cEYpjA9oz9GiPac4AsH4n').then(response =>
+      //   dispatch({
+      //     type: "SET_DISCOVER_WEEKLY",
+      //     discover_weekly: response,
+      //   })
+      // );
 
       spotify.getMyTopArtists().then((response) =>
         dispatch({
@@ -50,7 +50,7 @@ function App() {
       });
 
 
-    
+
       spotify.getMe().then((user) => {     //once danny is logged in and uses dispatch
 
         dispatch({                     //it pops inn user into datalayer
@@ -62,15 +62,27 @@ function App() {
       spotify.getUserPlaylists().then((playlists) => {
         dispatch({
           type: "SET_PLAYLISTS",
-          playlists,
+          playlists: playlists,
         });
+      });
+
+      spotify.getUserPlaylists().then((playlists) => {
+        if (playlists.items.length > 0) {
+          spotify.getPlaylist(playlists.items[0].id).then(response => {
+            console.log("Fetched playlist:", response);
+            dispatch({
+              type: "SET_DISCOVER_WEEKLY",
+              discover_weekly: response,
+            })
+          });
+        }
       });
 
     }
 
   }, [token, dispatch]);
 
-  
+
 
   return (
     <div className="app">

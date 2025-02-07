@@ -10,10 +10,16 @@ import SongRow from './SongRow';
 function Body( {spotify} ) {
     const [{ discover_weekly }, dispatch] = useDataLayerValue();   //pulls from datalayer
 
+    // Update the playPlaylist function
     const playPlaylist = (id) => {
+        if (!discover_weekly?.id) {
+            console.error('No playlist selected');
+            return;
+        }
+        
         spotify
           .play({
-            context_uri: `spotify:playlist:37i9dQZEVXcJSB0z6KuUxL`,
+            context_uri: `spotify:playlist:${discover_weekly.id}`,
           })
           .then((res) => {
             spotify.getMyCurrentPlayingTrack().then((r) => {
@@ -26,7 +32,8 @@ function Body( {spotify} ) {
                 playing: true,
               });
             });
-          });
+          })
+          .catch(error => console.error('Error playing playlist:', error));
       };
     
       const playSong = (id) => {
@@ -49,32 +56,36 @@ function Body( {spotify} ) {
       };
 
     return (
-        <div className='body'>
-            <Header spotify = {spotify}/>
+      <div className='body'>
+        <Header spotify={spotify} />
 
-            <div className='body__info'>
-                <img src = {discover_weekly?.images[0].url} alt = ""/>
+        <div className='body__info'>
+          <img src={discover_weekly?.images[0].url} alt="" />
 
-                <div className='body__infoText'>
-                    <strong>PLAYLIST</strong>
-                    <h2>Discover Weekly</h2>
-                    <p>{discover_weekly?.description}</p>
-                </div>
-            </div>
-
-            <div className='body_songs'>
-                <div className='body_icons'>
-                    <PlayCircleFilledIcon className='body_shuffle' onClick = {playPlaylist}/>
-                    <FavoriteOutlinedIcon fontSize='large' />
-                    <MoreHorizOutlinedIcon />
-                </div>
-                
-                {/* List of songs */}
-                {discover_weekly?.tracks.items.map(item =>(
-                    <SongRow playSong={playSong} track = {item.track} />
-                ))}
-            </div>
+          <div className='body__infoText'>
+            <strong>PLAYLIST</strong>
+            <h2>{discover_weekly?.name}</h2>
+            <p>{discover_weekly?.description}</p>
+          </div>
         </div>
+
+        <div className='body_songs'>
+          <div className='body_icons'>
+            <PlayCircleFilledIcon className='body_shuffle' onClick={playPlaylist} />
+            <FavoriteOutlinedIcon fontSize='large' />
+            <MoreHorizOutlinedIcon />
+          </div>
+          
+          {/* List of songs */}
+          {discover_weekly?.tracks.items.map(item => (
+            <SongRow
+              key={item.track.id}
+              playSong={playSong}
+              track={item.track}
+            />
+          ))}
+        </div>
+      </div>
     )
 }
 

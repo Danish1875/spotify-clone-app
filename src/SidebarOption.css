@@ -1,16 +1,18 @@
 .sidebarOption {
     display: flex;
     align-items: center;
-    color: grey;
-    height: 40px;
+    color: rgb(179, 179, 179);
+    height: 50px;  /* Increased height to accommodate images */
     cursor: pointer;
     transition: 200ms color ease-in;
+    padding: 5px 20px;
+    margin: 8px 0;  /* Increased margin between items */
 }
 
 .sidebar > hr {
-    border: 1px solid #282828;
+    border: 1px solid #bababa;
     width: 90%;
-    margin: 10px auto;
+    margin: 20px auto;  /* Increased margin */
 }
 
 .sidebarOption:hover {
@@ -18,14 +20,27 @@
 }
 
 .sidebarOption__icon {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-right: 6px;
+    font-size: 24px;
 }
 
 .sidebarOption > p {
-    margin-top: 10px;
-    margin-left: 20px;
-    font-size: 14px;
+    margin: 0;
+    font-size: 16px;
 }
 
-/* 2:40:40 */
+.sidebarOption__playlist {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0;  /* Reset padding */
+    height: 100%;  /* Fill parent height */
+}
+
+.playlist__image {
+    height: 40px;  /* Reduced height */
+    width: 40px;  /* Reduced width */
+    margin-right: 15px;
+    object-fit: cover;
+    border-radius: 4px;  /* Optional: adds slight rounding to playlist images */
+}

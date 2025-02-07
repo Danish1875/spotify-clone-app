@@ -15,7 +15,7 @@ function Footer() {
     return (
         <div className='footer'>
             <div className='footer__left'>
-                <img className='footer__albumLogo' src='https://upload.wikimedia.org/wikipedia/en/2/2e/Usher-yeah.jpg' alt='' />
+                <img className='footer__albumLogo' src='https://upload.wikimedia.org/wikipedia/en/1/1a/Usher_-_8701.png' alt='' />
                 <div className='footer__songInfo'>
                     <h4>Yeah!</h4>
                     <p>Usher</p>

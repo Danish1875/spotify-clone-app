@@ -51,7 +51,7 @@ const reducer = (state, action) => {
         case "SET_TOKEN":
             return {
                 ...state,
-                user: action.token,
+                token: action.token,  // Set token instead of user
             };
         
         case "SET_SPOTIFY":
