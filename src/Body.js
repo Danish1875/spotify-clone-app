@@ -10,10 +10,16 @@ import SongRow from './SongRow';
 function Body( {spotify} ) {
     const [{ discover_weekly }, dispatch] = useDataLayerValue();   //pulls from datalayer
 
+    // Update the playPlaylist function
     const playPlaylist = (id) => {
+        if (!discover_weekly?.id) {
+            console.error('No playlist selected');
+            return;
+        }
+        
         spotify
           .play({
-            context_uri: `spotify:playlist:37i9dQZEVXcJSB0z6KuUxL`,
+            context_uri: `spotify:playlist:${discover_weekly.id}`,
           })
           .then((res) => {
             spotify.getMyCurrentPlayingTrack().then((r) => {
@@ -26,7 +32,8 @@ function Body( {spotify} ) {
                 playing: true,
               });
             });
-          });
+          })
+          .catch(error => console.error('Error playing playlist:', error));
       };
     
       const playSong = (id) => {
