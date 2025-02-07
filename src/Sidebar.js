@@ -27,7 +27,8 @@ function Sidebar() {
             {playlists?.items?.map(playlist => (
                 <SidebarOption 
                     key={playlist.id} 
-                    title={playlist.name} 
+                    title={playlist.name}
+                    playlist={playlist} // Pass the entire playlist object
                 />
             ))}
         </div>
