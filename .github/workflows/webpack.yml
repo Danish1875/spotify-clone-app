@@ -32,7 +32,13 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: Install dependencies
-      run: npm ci 
+      run: npm ci || npm install
+
+    - name: Verify webpack-cli installation
+      run: npm list webpack-cli  
+      
+    - name: Install webpack-cli if missing
+      run: npm install -D webpack-cli  
 
     - name: Build
       run: npx webpack --config webpack.config.js  
